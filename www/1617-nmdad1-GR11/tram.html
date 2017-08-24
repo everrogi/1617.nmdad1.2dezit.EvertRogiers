@@ -1,0 +1,24 @@
+---
+layout: default
+---
+
+<form method="get" action="https://www.google.com/maps" target="mapframe">
+    <input name="saddr" type="text" id="saddr">
+    <input name="output" type="hidden" value="embed">
+    <input name="f" type="hidden" value="d">
+    <input name="z" type="hidden" value="11">
+    <input name="daddr" type="hidden" class="daddr"
+           value="Gent Sporthal Bourgoyen, Belgium">
+    <option name="daddr" type="hidden" class="daddr"
+            value="Gent Sporthal Bourgoyen, Belgium"></option>
+
+
+    <input type="submit" name="Submit" value="Submit">
+</form>
+<iframe
+        name="mapframe" width="425" height="350"
+        src="https://www.google.com/maps?z=11&amp;f=d&amp;output=embed&amp;ll=51.057312, 3.726838">
+</iframe>
+
+
+

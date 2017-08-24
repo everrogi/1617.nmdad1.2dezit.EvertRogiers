@@ -1,0 +1,102 @@
+---
+layout: default
+---
+
+<div class="home">
+
+
+    <div id="title">Sporten</div>
+    <div id="searchbar">
+        <form>
+            <input type="text" placeholder ="zoek..." maxlength="25" id="search" onMouseDown="" onBlur="" autocomplete="no"/>
+            <!--<input type="submit" value="Search" id="sub"/>-->
+
+        </form>
+
+    </div>
+    <ul class="ul-sporten" id="sporten"></ul>
+
+</div>
+
+<script src="js/main.js"></script>
+<script type="text/javascript" src="js/model.js"></script>
+
+<script type="text/javascript">
+
+
+    $(document).ready(function() {
+        var sportArray = new Array();
+        $.getJSON("sporten.json", function(json) {
+            for (var i in json['sports']) {
+                var tmpLocationArray = new Array();
+
+                for (var j in json['sports'][i].locations) {
+                    var geoLocation = new GeoLocation(json['sports'][i].locations[j].geolocation.lat, json['sports'][i].locations[j].geolocation.lng);
+                    var name = json['sports'][i].locations[j].naam;
+                    var location = new Location(name, geoLocation);
+                    tmpLocationArray.push(location);
+                }
+
+                var tmpPictures = new Picture(json['sports'][i].pictures.small);
+                var tmpSport = new Sport(json['sports'][i].name, json['sports'][i].synopsis, tmpPictures, tmpLocationArray);
+                sportArray.push(tmpSport);
+            }
+
+            sportArray.forEach(function(sport) {
+                document.getElementById("sporten").innerHTML += "<li>" + "<h1 class='sporttitel'>" + sport.name + "</h1>" + '<br><p class="small-synopsis">'
+                        + sport.synopsis + '</p></a><img class="fotosport" src="'
+                        + sport.pictures.small + '"><h2 class="h2-loc">Locaties :</h2><ul>';
+                sport.locations.forEach(function(location) {
+                    document.getElementById("sporten").innerHTML += '<li>' + location.name + '</li>';
+                });
+                document.getElementById("sporten").innerHTML += '</ul>' + '</li><hr>';
+
+            });
+
+            $("#search").keyup(function() {
+                var query = this.value;
+
+                if (query.length >= 2) {
+                    var resultArray = new Array();
+
+                    sportArray.forEach(function (sport) {
+                        if (sport.name.toLowerCase().search(query.toLowerCase()) > -1) {
+                            resultArray.push(sport);
+                        }
+                    });
+
+                    document.getElementById("sporten").innerHTML = "";
+                    resultArray.forEach(function(sport) {
+                        document.getElementById("sporten").innerHTML += "<li>" + "<h1 class='sporttitel'>" + sport.name + "</h1>" + '<br><p class="small-synopsis">'
+                                + sport.synopsis + '</p></a><img src="'
+                                + sport.pictures.small + '"><h2 class="h2-loc">Locaties :</h2><ul>';
+                        sport.locations.forEach(function(location) {
+                            document.getElementById("sporten").innerHTML += '<li>' + location.name + '</li>';
+                        });
+                        document.getElementById("sporten").innerHTML += '</ul>' + '</li><hr>';
+
+                    });
+                } else {
+                    document.getElementById("sporten").innerHTML = "";
+                    sportArray.forEach(function(sport) {
+                        document.getElementById("sporten").innerHTML += "<li>" + "<h1 class='sporttitel'>" + sport.name + "</h1>" + '<br><p class="small-synopsis">'
+                                + sport.synopsis + '</p></a><img src="'
+                                + sport.pictures.small + '"><h2 class="h2-loc">Locaties :</h2><ul>';
+                        sport.locations.forEach(function(location) {
+                            document.getElementById("sporten").innerHTML += '<li>' + location.name + '</li>';
+                        });
+                        document.getElementById("sporten").innerHTML += '</ul>' + '</li><hr>';
+
+                    });
+                }
+            });
+
+        });
+        /*console.log(obj);
+         //foreach*/
+
+
+
+    });
+
+</script>

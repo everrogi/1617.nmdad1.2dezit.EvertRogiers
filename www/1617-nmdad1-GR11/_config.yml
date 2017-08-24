@@ -1,0 +1,34 @@
+# Site settings
+# -------------
+baseurl     : "" # the subpath of your site, e.g. /blog/
+colour      : primary
+language    : nl
+host        : 127.0.0.1
+port        : 4040
+
+# SEO
+# ---
+title      : Sport.It
+description: "Sporten in Gent"
+author     : Hannes Van Hijfte
+tracking_id: "UA-79628300-1"
+# url        :
+# image      :
+
+# Build settings
+# --------------
+gems:
+
+
+
+highlighter: rouge
+markdown: kramdown
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+sass:
+  style: compressed
+exclude:
+  - Gemfile
+  - LICENSE
+  - README.md
